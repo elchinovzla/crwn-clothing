@@ -1,4 +1,4 @@
-import { USER_ACTION_TYPES } from "./user.types";
+import { createSlice } from "@reduxjs/toolkit";
 
 const INITIAL_STATE = {
     currentUser: null,
@@ -6,33 +6,27 @@ const INITIAL_STATE = {
     error: null
 }
 
-export const userReducer = (state = INITIAL_STATE, action) => {
-    const { type, payload } = action;
-
-    switch (type) {
-        case USER_ACTION_TYPES.SIGN_IN_SUCCESS:
-            return {
-                ...state,
-                isLoading: false,
-                currentUser: payload,
-                error: null
-            }
-        case USER_ACTION_TYPES.SIGN_OUT_SUCCEEDED:
-            return {
-                ...state,
-                isLoading: false,
-                currentUser: null,
-                error: null
-            }
-        case USER_ACTION_TYPES.SIGN_UP_FAILED:
-        case USER_ACTION_TYPES.SIGN_OUT_FAILED:
-        case USER_ACTION_TYPES.SIGN_IN_FAILED:
-            return {
-                ...state,
-                isLoading: false,
-                error: payload
-            }
-        default:
-            return state;
+const userSlice = createSlice({
+    name: 'users',
+    initialState: INITIAL_STATE,
+    reducers: {
+        signInSuccess(state, action) {
+            state.currentUser = action.payload;
+            state.isLoading = false;
+            state.error = null;
+        },
+        signOutSucceeded(state, action) {
+            state.currentUser = null;
+            state.isLoading = false;
+            state.error = null;
+        },
+        userFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload;
+            console.log(action.payload);
+        }
     }
-}
+})
+
+export const { signInSuccess, signOutSucceeded, userFailed } = userSlice.actions;
+export const userReducer = userSlice.reducer;

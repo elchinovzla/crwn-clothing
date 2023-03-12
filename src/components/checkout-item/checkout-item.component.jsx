@@ -1,18 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { clearItemFromCart, addItemToCart, removeItemFromCart } from '../../store/cart/cart.action';
-import { selectCartItems } from '../../store/cart/cart.selector';
+import { useDispatch } from 'react-redux';
+import { clearItemFromCart, addItemToCart, removeItemFromCart } from '../../store/cart/cart.reducer';
 
 import './checkout-item.styles.scss'
 
 const CheckoutItem = ({ cartItem }) => {
     const dispatch = useDispatch();
-    const cartItems = useSelector(selectCartItems);
 
     const { name, imageUrl, price, quantity } = cartItem;
 
-    const clearItemHandler = () => dispatch(clearItemFromCart(cartItems, cartItem));
-    const addItemToCartHandler = () => dispatch(addItemToCart(cartItems, cartItem));
-    const removeItemFromCartHandler = () => dispatch(removeItemFromCart(cartItems, cartItem));
+    const clearItemHandler = () => dispatch(clearItemFromCart(cartItem));
+    const addItemToCartHandler = () => dispatch(addItemToCart(cartItem));
+    const removeItemFromCartHandler = () => dispatch(removeItemFromCart(cartItem));
 
     return (
         <div className='checkout-item-container'>
