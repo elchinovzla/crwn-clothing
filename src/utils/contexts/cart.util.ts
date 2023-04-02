@@ -1,4 +1,8 @@
-export const addCartItem = (cartItems, productToAdd) => {
+import { CartItem } from "../../store/cart/cart.reducer";
+import { CategoryItem } from "../../store/categories/category.reducer";
+import { withMatcher } from "../reducer/reducer.utils";
+
+export const addCartItem = (cartItems: CartItem[], productToAdd: CategoryItem): CartItem[] => {
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
 
     if (existingCartItem) {
@@ -11,10 +15,10 @@ export const addCartItem = (cartItems, productToAdd) => {
     return [...cartItems, { ...productToAdd, quantity: 1 }]
 }
 
-export const removeCartItem = (cartItems, productToRemove) => {
+export const removeCartItem = (cartItems: CartItem[], productToRemove: CartItem): CartItem[] => {
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToRemove.id);
 
-    if (existingCartItem.quantity <= 1) {
+    if (existingCartItem && existingCartItem.quantity <= 1) {
         return clearProduct(cartItems, existingCartItem);
     }
 
@@ -24,6 +28,6 @@ export const removeCartItem = (cartItems, productToRemove) => {
     )
 }
 
-export const clearProduct = (cartItems, productToClear) => {
+export const clearProduct = (cartItems: CartItem[], productToClear: CartItem): CartItem[] => {
     return cartItems.filter((cartItem) => cartItem.id !== productToClear.id);
 }

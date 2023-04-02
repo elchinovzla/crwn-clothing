@@ -1,7 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { CategoryItem } from "../categories/category.reducer";
 import { addCartItem, clearProduct, removeCartItem } from "../../utils/contexts/cart.util";
 
-const CART_INITIAL_STATE = {
+export type CartItem = CategoryItem & {
+    quantity: number
+}
+
+export type CartState = {
+    isCartOpen: boolean;
+    cartItems: CartItem[];
+}
+
+const CART_INITIAL_STATE: CartState = {
     isCartOpen: false,
     cartItems: []
 }

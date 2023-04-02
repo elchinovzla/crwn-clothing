@@ -1,6 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const CATEGORIES_INITIAL_STATE = {
+export type CategoryItem = {
+    id: string;
+}
+
+export type CategoryState = {
+    categories: CategoryItem[];
+    isLoading: boolean;
+    error: any;
+}
+
+export const CATEGORIES_INITIAL_STATE: CategoryState = {
     categories: [],
     isLoading: false,
     error: null,
@@ -10,7 +20,7 @@ const categoriesSlice = createSlice({
     name: "categories",
     initialState: CATEGORIES_INITIAL_STATE,
     reducers: {
-        fetchCategoriesStart(state, action) {
+        fetchCategoriesStart(state) {
             state.isLoading = true;
         },
         fetchCategoriesSucceded(state, action) {
