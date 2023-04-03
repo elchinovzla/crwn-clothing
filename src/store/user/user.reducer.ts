@@ -1,6 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { UserData, } from "../../utils/firebase/firebase.utils";
 
-const INITIAL_STATE = {
+export type UserState = {
+    readonly currentUser: UserData | null;
+    readonly isLoading: boolean;
+    readonly error: unknown;
+}
+
+const INITIAL_STATE: UserState = {
     currentUser: null,
     isLoading: false,
     error: null
@@ -15,7 +22,7 @@ const userSlice = createSlice({
             state.isLoading = false;
             state.error = null;
         },
-        signOutSucceeded(state, action) {
+        signOutSucceeded(state) {
             state.currentUser = null;
             state.isLoading = false;
             state.error = null;
