@@ -1,10 +1,20 @@
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import { addItemToCart } from '../../store/cart/cart.reducer';
+import {
+    ProductCartContainer,
+    Footer,
+    Name,
+    Price,
+} from './product-card.styles';
+import { CategoryItem } from '../../store/categories/category.reducer';
 
-import './product-card.styles.scss'
+type ProductCardProps = {
+    product: CategoryItem;
+};
 
-const ProductCard = ({ product }) => {
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
     const dispatch = useDispatch();
 
     const { name, price, imageUrl } = product;
@@ -12,16 +22,16 @@ const ProductCard = ({ product }) => {
     const addProductToCart = () => dispatch(addItemToCart(product));
 
     return (
-        <div className='product-card-container'>
+        <ProductCartContainer>
             <img src={imageUrl} alt={`${name}`} />
-            <div className='footer'>
-                <span className='name'>{name}</span>
-                <span className='price'>{price}</span>
-            </div>
+            <Footer>
+                <Name>{name}</Name>
+                <Price>{price}</Price>
+            </Footer>
             <Button buttonType={BUTTON_TYPE_CLASSES.inverted} onClick={addProductToCart}>
                 Add to cart
             </Button>
-        </div>
+        </ProductCartContainer>
     );
 }
 
